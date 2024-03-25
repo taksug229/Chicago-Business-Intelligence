@@ -1,0 +1,6 @@
+github.com/joho/godotenv v1.5.1 h1:7eLL/+HRGLY0ldzfGMeQkb7vMd0as4CfYvUVzLqw0N0=
+github.com/joho/godotenv v1.5.1/go.mod h1:f4LDr5Voq0i2e/R5DDNOoa2zzDfwtkZa6DnEwAbqwq4=
+github.com/kelvins/geocoder v0.0.0-20200113010004-f579500e9e27 h1:ekI686mLb7Nxb8fgczSM1iV235ypZpOZwL/ANcGZ9Lg=
+github.com/kelvins/geocoder v0.0.0-20200113010004-f579500e9e27/go.mod h1:JaVDVP24FJxa8OtNO5T1A2WKgstNreJGyK1PvBRzPW0=
+github.com/lib/pq v1.10.5 h1:J+gdV2cUmX7ZqL2B0lFcW0m+egaHC2V3lpO8nWxyYiQ=
+github.com/lib/pq v1.10.5/go.mod h1:AlVN5x4E4T544tWzH6hKfbfQvm3HdbOxrmggDNAPY9o=

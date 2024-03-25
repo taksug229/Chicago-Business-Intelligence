@@ -1,0 +1,49 @@
+steps:
+# Steps to pull a docker image for pgadmin, push it to container registry and deploy it to cloud run.
+- name: "gcr.io/cloud-builders/docker"
+  args: ['pull', 'dpage/pgadmin4']
+- name: "gcr.io/cloud-builders/docker"
+  args: ['tag', 'dpage/pgadmin4','gcr.io/$PROJECT_ID/pgadmin']
+- name: "gcr.io/cloud-builders/docker"
+  args: ['push', 'gcr.io/$PROJECT_ID/pgadmin']
+
+- name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+  entrypoint: gcloud
+  args: ['run', 'deploy','pg-admin', '--image','gcr.io/$PROJECT_ID/pgadmin', '--region','us-central1', '--add-cloudsql-instances', '$PROJECT_ID:us-central1:mypostgres','--platform','managed', '--port','80', '--allow-unauthenticated','--set-env-vars','PGADMIN_DEFAULT_EMAIL=user@gmail.com','--set-env-vars','PGADMIN_DEFAULT_PASSWORD=SuperSecret']
+
+# Steps to build a docker image for go-microservice, push it to container registry and deploy it to cloud run.
+- name: "gcr.io/cloud-builders/docker"
+  args: ['build', '--no-cache', '-t', 'gcr.io/$PROJECT_ID/go-microservice', '-f', 'Dockerfile.backend', '.']
+- name: "gcr.io/cloud-builders/docker"
+  args: ['push', 'gcr.io/$PROJECT_ID/go-microservice']
+- name: "gcr.io/cloud-builders/docker"
+  args: ['build', '--no-cache', '-t', 'gcr.io/$PROJECT_ID/django-microservice', '-f', 'Dockerfile.frontend', '.']
+- name: "gcr.io/cloud-builders/docker"
+  args: ['push', 'gcr.io/$PROJECT_ID/django-microservice']
+
+- name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+  entrypoint: gcloud
+  args: [
+    'run', 'deploy','go-microservice',
+    '--image','gcr.io/$PROJECT_ID/go-microservice',
+    '--region','us-central1',
+    '--add-cloudsql-instances', '$PROJECT_ID:us-central1:mypostgres',
+    '--platform','managed',
+    '--port','8080',
+    '--allow-unauthenticated'
+    ]
+- name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+  entrypoint: gcloud
+  args: [
+    'run', 'deploy', 'django-microservice',
+    '--image', 'gcr.io/$PROJECT_ID/django-microservice',
+    '--region', 'us-central1',
+    '--add-cloudsql-instances', '$PROJECT_ID:us-central1:mypostgres',
+    '--platform', 'managed',
+    '--port', '8000',
+    '--allow-unauthenticated'
+    ]
+images:
+- gcr.io/$PROJECT_ID/go-microservice
+- gcr.io/$PROJECT_ID/pgadmin
+- gcr.io/$PROJECT_ID/django-microservice

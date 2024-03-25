@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Home</title>
+    <!-- Include any CSS files or CDN links for styling -->
+</head>
+<body>
+    <h1>Welcome to the Chicago Business Intelligence Dashboards</h1>
+
+    <ul>
+        <li><a href="{% url 'taxi_trips_from_airport' %}">Taxi Trips From Airport</a></li>
+        <li><a href="{% url 'taxi_trips_high_ccvi' %}">Taxi Trips with High CCVI</a></li>
+        <li><a href="{% url 'building_fee' %}">Building Fee Per Year</a></li>
+        <li><a href="{% url 'new_construction' %}">New Construction in Low Income Zip Codes Per Year</a></li>
+    </ul>
+</body>
+</html>

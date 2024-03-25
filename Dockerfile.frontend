@@ -1,0 +1,13 @@
+# syntax=docker/dockerfile:1
+FROM python:3.10-alpine3.18
+ENV PORT 8000
+ENV HOSTDIR 0.0.0.0
+
+EXPOSE 8000
+WORKDIR /app
+COPY frontend .env ./
+RUN apk update && \
+    apk add --no-cache postgresql-dev gcc python3-dev musl-dev
+RUN python3 -m pip install --upgrade pip && \
+    pip install -r requirements.txt
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

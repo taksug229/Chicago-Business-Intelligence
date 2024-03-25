@@ -1,0 +1,5 @@
+.git
+.vscode
+.pre-commit-config.yaml
+*.pdf
+source-code
